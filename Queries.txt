@@ -1,0 +1,35 @@
+1)
+SELECT * FROM user_table WHERE user_table.phone_number LIKE "0912%";
+2)
+SELECT * FROM user_table WHERE user_table.phone_number LIKE "0912%";
+3)
+SELECT * FROM product WHERE produced_by = 1234567890;
+4)
+SELECT * FROM product WHERE product.id in(SELECT product_id FROM products_of_bills HAVING AVG(products_of_bills.rate)BETWEEN 3 and 4 );
+5)
+UPDATE product SET price_sell = price_sell *(110/100);
+SELECT * FROM product;
+6)
+(SELECT * FROM product WHERE product.produced_by IN(SELECT producer.national_code FROM producer WHERE producer.name = "Sadra_Producer") ) Intersect (SELECT * FROM product WHERE product.id IN (SELECT product_id FROM products_of_bills GROUP by product_id HAVING AVG(rate)>= 3) ) ;
+7)
+SELECT * FROM bill WHERE bill.buyer_code = 1122334455;
+8)
+SELECT * FROM producer WHERE producer.national_code IN(SELECT product.produced_by FROM product WHERE product.id IN(SELECT products_of_bills.product_id FROM products_of_bills WHERE products_of_bills.bill_id IN(SELECT bill.id FROM bill WHERE bill.buyer_code = 1122334455))); 
+9)
+SELECT * FROM product WHERE product.id IN (SELECT products_of_bills.product_id FROM products_of_bills WHERE products_of_bills.bill_id IN(SELECT bill.id FROM bill WHERE bill.register_date >= "2020-01-01"));
+10)
+SELECT * FROM product WHERE (product.price_sell - product.price_buy) > 30;
+11)
+SELECT user_table.name FROM user_table WHERE user_table.national_code IN(SELECT bill.buyer_code FROM bill WHERE bill.id IN(SELECT products_of_bills.bill_id FROM products_of_bills WHERE products_of_bills.product_id IN(SELECT product.id FROM product WHERE product.name = "Sib")));
+12)
+Create view all_rate as select avg(rate) from products_of_bills;
+SELECT * FROM product WHERE product.id IN(SELECT products_of_bills.product_id FROM products_of_bills GROUP BY products_of_bills.product_id HAVING (AVG(rate) >= (SELECT * FROM all_rate )));
+13)
+SELECT * FROM product WHERE product.id in (SELECT products_of_bills.product_id FROM products_of_bills WHERE products_of_bills.rate IN (SELECT MAX(products_of_bills.rate) FROM products_of_bills));
+14)
+
+15)
+SELECT * FROM user_table WHERE user_table.national_code IN(SELECT bill.buyer_code FROM bill WHERE bill.id IN(SELECT products_of_bills.bill_id FROM products_of_bills WHERE products_of_bills.number > 1 ));
+16)
+SELECT * FROM user_table WHERE user_table.national_code IN(SELECT bill.buyer_code FROM bill WHERE bill.id IN(SELECT products_of_bills.bill_id FROM products_of_bills HAVING COUNT(products_of_bills.product_id)> 1 ));
+
